@@ -18,6 +18,35 @@ const downloadBtn = document.getElementById("downloadBtn");
 let currentFile = null;
 let currentText = "";
 
+// -- small visual touches --
+
+function addRipple(e) {
+  const btn = e.currentTarget;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const ripple = document.createElement("span");
+  ripple.className = "ripple";
+  ripple.style.width = ripple.style.height = `${size}px`;
+  ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+  ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+  btn.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+}
+
+document.querySelectorAll(".btn").forEach((btn) => btn.addEventListener("click", addRipple));
+
+function countUpTo(target, onTick) {
+  const duration = 600;
+  const start = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    onTick(Math.round(target * eased));
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function showError(message) {
   errorMsg.textContent = message;
   errorMsg.hidden = false;
@@ -114,6 +143,10 @@ scanBtn.addEventListener("click", async () => {
     }
 
     renderResult(data);
+    if (data.text) {
+      scanBtn.classList.add("success");
+      setTimeout(() => scanBtn.classList.remove("success"), 900);
+    }
   } catch {
     showError("Couldn't reach the server. Check your connection and try again.");
   } finally {
@@ -125,6 +158,7 @@ scanBtn.addEventListener("click", async () => {
 
 function renderResult(data) {
   currentText = data.text || "";
+  resultBody.classList.remove("revealed");
 
   if (!currentText) {
     resultBody.innerHTML = `<p class="placeholder">${data.message || "No readable text found in this image."}</p>`;
@@ -132,14 +166,20 @@ function renderResult(data) {
     downloadBtn.disabled = true;
     confidenceBadge.hidden = true;
     wordCount.textContent = "";
+    void resultBody.offsetWidth; // restart the reveal animation
+    resultBody.classList.add("revealed");
     return;
   }
 
   // textContent, not innerHTML — never trust extracted text as markup
   resultBody.textContent = currentText;
+  void resultBody.offsetWidth; // restart the reveal animation
+  resultBody.classList.add("revealed");
 
   confidenceBadge.hidden = false;
-  confidenceValue.textContent = `${data.confidence}% confidence`;
+  countUpTo(Math.round(data.confidence), (val) => {
+    confidenceValue.textContent = `${val}% confidence`;
+  });
 
   wordCount.textContent = `${data.words} word${data.words === 1 ? "" : "s"}`;
   copyBtn.disabled = false;

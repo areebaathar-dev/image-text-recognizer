@@ -148,12 +148,19 @@ button { font-family: inherit; cursor: pointer; }
   padding: 24px;
   transition: border-color 0.25s ease, background 0.25s ease;
   position: relative;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { border-color: var(--border); }
+  50%      { border-color: #3a4356; }
 }
 
 .dropzone.drag-over {
   border-color: var(--accent);
   background: rgba(55, 201, 176, 0.06);
   box-shadow: 0 0 0 1px rgba(55, 201, 176, 0.25), 0 0 24px rgba(55, 201, 176, 0.12);
+  animation: none;
 }
 
 .dz-state {
@@ -181,6 +188,12 @@ button { font-family: inherit; cursor: pointer; }
   overflow: hidden;
   background: #000;
   line-height: 0;
+  animation: pop-in 0.4s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 .preview-frame img {
@@ -189,6 +202,11 @@ button { font-family: inherit; cursor: pointer; }
   object-fit: contain;
   display: block;
   background: repeating-conic-gradient(#141821 0% 25%, #10131a 0% 50%) 50% / 16px 16px;
+  transition: transform 0.4s ease;
+}
+
+.preview-frame:hover img {
+  transform: scale(1.02);
 }
 
 .scan-line {
@@ -225,11 +243,33 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 14px;
   font-weight: 500;
   transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover { border-color: #3a4356; }
 .btn:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn.success {
+  background: var(--confirm, #37c9b0) !important;
+  border-color: var(--confirm, #37c9b0) !important;
+  color: #06231f !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  animation: ripple-out 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple-out {
+  to { transform: scale(2.6); opacity: 0; }
+}
 
 .btn.primary {
   background: var(--accent);
@@ -320,6 +360,15 @@ button { font-family: inherit; cursor: pointer; }
   word-break: break-word;
 }
 
+.result-body.revealed {
+  animation: reveal-text 0.45s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes reveal-text {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .result-body .placeholder {
   color: #8a8370;
   font-family: 'Inter', sans-serif;
@@ -346,6 +395,15 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 13px;
   margin: 10px 2px 0;
   font-family: 'JetBrains Mono', monospace;
+  animation: shake-in 0.4s ease both;
+}
+
+@keyframes shake-in {
+  0%   { opacity: 0; transform: translateX(0); }
+  30%  { opacity: 1; transform: translateX(-4px); }
+  55%  { transform: translateX(3px); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
 }
 
 /* ---------- footer ---------- */
