@@ -1,15 +1,15 @@
 :root {
-  --bg: #10131a;
-  --surface: #181c26;
-  --surface-2: #1f2531;
-  --border: #2a3140;
-  --paper: #f3edda;
-  --ink: #23201a;
-  --text: #e8e6df;
-  --muted: #9aa2b8;
-  --accent: #37c9b0;
-  --accent-2: #e8b84b;
-  --danger: #ff7a6b;
+  --bg: #1a1410;
+  --surface: #221b15;
+  --surface-2: #2b231b;
+  --border: #3c3123;
+  --paper: #f0e9d8;
+  --ink: #241d12;
+  --text: #f1ece1;
+  --muted: #ab9d86;
+  --accent: #d97a3f;
+  --accent-2: #c9a961;
+  --danger: #e0563f;
   --radius: 14px;
   --radius-sm: 9px;
 }
@@ -61,7 +61,7 @@ body {
   left: 0; right: 0;
   height: 140px;
   top: -140px;
-  background: linear-gradient(180deg, transparent, rgba(55,201,176,0.05), transparent);
+  background: linear-gradient(180deg, transparent, rgba(232,129,58,0.05), transparent);
   animation: beam-sweep 9s linear infinite;
 }
 
@@ -103,8 +103,8 @@ button { font-family: inherit; cursor: pointer; }
   width: 26px;
   height: 26px;
   border-radius: 7px;
-  background: var(--accent-soft, rgba(55,201,176,0.12));
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
 }
 
 .brand svg { animation: spin-slow 14s linear infinite; }
@@ -195,15 +195,20 @@ button { font-family: inherit; cursor: pointer; }
 .feature {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13.5px;
+  gap: 7px;
+  font-size: 13px;
   color: var(--muted);
-  transition: color 0.2s ease, transform 0.2s ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 13px 6px 10px;
+  border-radius: 20px;
+  transition: color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .feature:hover {
   color: var(--text);
   transform: translateY(-1px);
+  border-color: var(--accent);
 }
 
 .feature svg { color: var(--accent-2); flex-shrink: 0; }
@@ -274,7 +279,7 @@ button { font-family: inherit; cursor: pointer; }
 .ba-tag-accent {
   position: static;
   align-self: flex-start;
-  color: #06231f;
+  color: #2b1608;
   background: var(--accent);
   margin-bottom: 2px;
 }
@@ -361,7 +366,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
   justify-content: center;
   padding: 24px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
   position: relative;
   animation: breathe 4s ease-in-out infinite;
 }
@@ -373,9 +378,10 @@ button { font-family: inherit; cursor: pointer; }
 
 .dropzone.drag-over {
   border-color: var(--accent);
-  background: rgba(55, 201, 176, 0.06);
-  box-shadow: 0 0 0 1px rgba(55, 201, 176, 0.25), 0 0 24px rgba(55, 201, 176, 0.12);
+  background: rgba(232, 129, 58, 0.06);
+  box-shadow: 0 0 0 1px rgba(232, 129, 58, 0.25), 0 0 24px rgba(232, 129, 58, 0.12);
   animation: none;
+  transform: scale(1.01);
 }
 
 .dz-state {
@@ -432,7 +438,7 @@ button { font-family: inherit; cursor: pointer; }
   max-height: 300px;
   object-fit: contain;
   display: block;
-  background: repeating-conic-gradient(#141821 0% 25%, #10131a 0% 50%) 50% / 16px 16px;
+  background: repeating-conic-gradient(#241d15 0% 25%, #1a1410 0% 50%) 50% / 16px 16px;
   transition: transform 0.4s ease;
 }
 
@@ -490,9 +496,9 @@ button { font-family: inherit; cursor: pointer; }
 .btn:not(.primary):disabled:hover { border-color: var(--border); }
 
 .btn.success {
-  background: var(--confirm, #37c9b0) !important;
-  border-color: var(--confirm, #37c9b0) !important;
-  color: #06231f !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #2b1608 !important;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
@@ -512,7 +518,7 @@ button { font-family: inherit; cursor: pointer; }
 .btn.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #06231f;
+  color: #2b1608;
   font-weight: 600;
   flex: 1;
 }
@@ -537,7 +543,7 @@ button { font-family: inherit; cursor: pointer; }
   width: 15px; height: 15px;
   border-radius: 50%;
   border: 2px solid rgba(6,35,31,0.35);
-  border-top-color: #06231f;
+  border-top-color: #2b1608;
   animation: spin 0.7s linear infinite;
 }
 

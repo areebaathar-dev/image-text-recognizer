@@ -121,6 +121,7 @@ trySampleBtn.addEventListener("click", async (e) => {
     const blob = await res.blob();
     const file = new File([blob], "sample.jpg", { type: "image/jpeg" });
     setFile(file);
+    runScan();
   } catch {
     showError("Couldn't load the sample image.");
   }
@@ -137,7 +138,9 @@ clearBtn.addEventListener("click", () => {
 
 // -- scan --
 
-scanBtn.addEventListener("click", async () => {
+scanBtn.addEventListener("click", runScan);
+
+async function runScan() {
   if (!currentFile) return;
 
   clearError();
@@ -169,7 +172,7 @@ scanBtn.addEventListener("click", async () => {
     scanBtn.disabled = false;
     scanLine.hidden = true;
   }
-});
+}
 
 function renderResult(data) {
   currentText = data.text || "";
@@ -210,7 +213,7 @@ copyBtn.addEventListener("click", async () => {
   await navigator.clipboard.writeText(currentText);
   const original = copyBtn.textContent;
   copyBtn.textContent = "Copied!";
-  setTimeout(() => (copyBtn.textContent = original), 1400);
+  setTimeout(() => (copyBtn.textContent = original), 1500);
 });
 
 downloadBtn.addEventListener("click", () => {
