@@ -77,6 +77,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+
 @app.route("/api/scan", methods=["POST"])
 @limiter.limit("10 per minute")
 def scan():

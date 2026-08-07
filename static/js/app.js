@@ -85,6 +85,8 @@ function resetResult() {
   wordCount.textContent = "";
   copyBtn.disabled = true;
   downloadBtn.disabled = true;
+  copyBtn.title = "Scan an image first";
+  downloadBtn.title = "Scan an image first";
 }
 
 // -- drag & drop --
@@ -110,6 +112,19 @@ dropzone.addEventListener("drop", (e) => {
 
 dzEmpty.addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", (e) => setFile(e.target.files[0]));
+
+const trySampleBtn = document.getElementById("trySampleBtn");
+trySampleBtn.addEventListener("click", async (e) => {
+  e.stopPropagation();
+  try {
+    const res = await fetch("/static/img/sample.jpg");
+    const blob = await res.blob();
+    const file = new File([blob], "sample.jpg", { type: "image/jpeg" });
+    setFile(file);
+  } catch {
+    showError("Couldn't load the sample image.");
+  }
+});
 
 clearBtn.addEventListener("click", () => {
   currentFile = null;
@@ -164,6 +179,8 @@ function renderResult(data) {
     resultBody.innerHTML = `<p class="placeholder">${data.message || "No readable text found in this image."}</p>`;
     copyBtn.disabled = true;
     downloadBtn.disabled = true;
+    copyBtn.title = "Scan an image first";
+    downloadBtn.title = "Scan an image first";
     confidenceBadge.hidden = true;
     wordCount.textContent = "";
     void resultBody.offsetWidth; // restart the reveal animation
@@ -184,6 +201,8 @@ function renderResult(data) {
   wordCount.textContent = `${data.words} word${data.words === 1 ? "" : "s"}`;
   copyBtn.disabled = false;
   downloadBtn.disabled = false;
+  copyBtn.title = "Copy to clipboard";
+  downloadBtn.title = "Download as a .txt file";
 }
 
 copyBtn.addEventListener("click", async () => {

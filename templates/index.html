@@ -16,6 +16,12 @@
 
   <header class="topbar">
     <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </span>
       <span>Image Text Recognizer</span>
     </div>
   </header>
@@ -43,19 +49,23 @@
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <div class="scan-card">
-          <div class="scan-card-dots"><span></span><span></span><span></span></div>
-          <div class="scan-lines">
-            <div class="s-line" style="width:78%"></div>
-            <div class="s-line" style="width:92%"></div>
-            <div class="s-line" style="width:60%"></div>
-            <div class="s-line" style="width:85%"></div>
-            <div class="s-line" style="width:45%"></div>
+        <div class="before-after">
+          <div class="ba-card ba-before">
+            <span class="ba-tag">photo</span>
+            <img src="{{ url_for('static', filename='img/sample.jpg') }}" alt="" />
           </div>
-          <div class="detect-box box-1"></div>
-          <div class="detect-box box-2"></div>
-          <div class="detect-box box-3"></div>
-          <div class="detect-chip">text detected</div>
+          <div class="ba-arrow">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="ba-card ba-after">
+            <span class="ba-tag ba-tag-accent">extracted</span>
+            <div class="ba-text">
+              <span class="ba-line">Meeting Notes - Product Review</span>
+              <span class="ba-line">1. Ship the OCR tool by Friday</span>
+              <span class="ba-line">2. Confidence score must show per scan</span>
+              <span class="ba-line">3. Keep uploads out of permanent storage</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -72,6 +82,7 @@
             </svg>
             <p>Drag an image here, or <span class="link">browse</span></p>
             <span class="hint">PNG, JPG, BMP or WEBP, up to 8MB</span>
+            <button type="button" id="trySampleBtn" class="try-sample">Try a sample image</button>
           </div>
 
           <div id="dzPreview" class="dz-state" hidden>
@@ -103,8 +114,8 @@
         <div class="result-foot">
           <span id="wordCount" class="word-count"></span>
           <div class="foot-actions">
-            <button id="copyBtn" class="btn small" disabled>Copy</button>
-            <button id="downloadBtn" class="btn small" disabled>Download .txt</button>
+            <button id="copyBtn" class="btn small" disabled title="Scan an image first">Copy</button>
+            <button id="downloadBtn" class="btn small" disabled title="Scan an image first">Download .txt</button>
           </div>
         </div>
       </div>
@@ -112,7 +123,7 @@
   </main>
 
   <footer>
-    <p>Nothing you upload is saved. Images are processed and deleted right away.</p>
+    <p>Nothing you upload is saved. Images are processed and deleted right away. <a href="{{ url_for('privacy') }}">Privacy</a></p>
   </footer>
 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
