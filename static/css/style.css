@@ -226,6 +226,7 @@ button { font-family: inherit; cursor: pointer; }
 .ba-card {
   position: relative;
   flex: 1;
+  min-width: 0;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 50px -20px rgba(0,0,0,0.55);
@@ -239,9 +240,10 @@ button { font-family: inherit; cursor: pointer; }
 .ba-before img {
   width: 100%;
   height: 150px;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  filter: brightness(0.85);
+  background: #e8e4d8;
+  filter: brightness(0.92);
 }
 
 .ba-after {
